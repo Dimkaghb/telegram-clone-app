@@ -64,7 +64,7 @@ export const useMessages = (chatId: string) => {
       await queryClient.cancelQueries({ queryKey: ['messages', chatId] });
 
       // Snapshot the previous value
-      const previousMessages = queryClient.getQueryData(['messages', chatId]);
+      const previousMessages = queryClient.getQueryData<Message[]>(['messages', chatId]) || [];
 
       // Optimistically update to the new value
       const optimisticMessage: Message = {
@@ -78,7 +78,8 @@ export const useMessages = (chatId: string) => {
 
       return { previousMessages };
     },
-    onError: (_err, _newMessage, context) => {
+    onError: (error: Error, _variables: string, context: { previousMessages: Message[] } | undefined) => {
+      console.error('Error sending message:', error);
       // If the mutation fails, use the context returned from onMutate to roll back
       if (context?.previousMessages) {
         queryClient.setQueryData(['messages', chatId], context.previousMessages);
