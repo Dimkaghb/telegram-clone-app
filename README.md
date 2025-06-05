@@ -1,4 +1,5 @@
-LINK - https://telegram-clone-app-sku6.vercel.app/
+Link to the page - https://telegram-clone-app-sku6.vercel.app/
+Link to the demo - https://www.loom.com/share/09724c0b19eb4fe8ab8d3218672abd29?sid=6a412636-463d-4e21-9a9f-d0aa92b3c7ec
 
 
 
