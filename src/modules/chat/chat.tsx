@@ -5,10 +5,9 @@ type ChatProps = {
   onSendMessage: (message: string) => Promise<void>;
   messages: Message[];
   isLoading: boolean;
-  chatId: string;
 }
 
-export const Chat = ({ onSendMessage, messages, isLoading, chatId }: ChatProps) => {
+export const Chat = ({ onSendMessage, messages, isLoading }: ChatProps) => {
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

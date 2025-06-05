@@ -78,7 +78,6 @@ const ChatWithHistory = () => {
       onSendMessage={handleSendMessage} 
       messages={messages} 
       isLoading={isLoading}
-      chatId={chatId || ''}
     />
   );
 };
