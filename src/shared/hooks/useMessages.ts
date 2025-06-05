@@ -78,8 +78,7 @@ export const useMessages = (chatId: string) => {
 
       return { previousMessages };
     },
-    onError: (error: Error, _variables: string, context: { previousMessages: Message[] } | undefined) => {
-      console.error('Error sending message:', error);
+    onError: (_error: Error, _variables: string, context: { previousMessages: Message[] } | undefined) => {
       // If the mutation fails, use the context returned from onMutate to roll back
       if (context?.previousMessages) {
         queryClient.setQueryData(['messages', chatId], context.previousMessages);
