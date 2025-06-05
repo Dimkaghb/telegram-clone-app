@@ -15,12 +15,21 @@ const chatList = [
 const ChatHeader = () => {
   const { chatId } = useParams<{ chatId: string }>();
   const currentChat = chatList.find(chat => chat.id === chatId);
+  const navigate = useNavigate();
 
   if (!currentChat) return null;
 
   return (
     <div className="h-14 px-4 flex items-center justify-between border-b border-[#0e1621] bg-[#17212b]">
       <div className="flex items-center gap-3">
+        <button 
+          onClick={() => navigate('/')}
+          className="lg:hidden p-2 hover:bg-[#242f3d] rounded-full transition-colors"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
         <div className="w-10 h-10 rounded-full bg-[#2b5278] flex items-center justify-center">
           <span className="text-lg">{currentChat.name[0]}</span>
         </div>
@@ -52,6 +61,7 @@ const ChatHeader = () => {
 
 export const Wrapper = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const filteredChats = chatList.filter(chat => 
@@ -60,12 +70,30 @@ export const Wrapper = () => {
 
   const handleChatClick = (chatId: string) => {
     navigate(`/chat/${chatId}`);
+    setIsSidebarOpen(false);
   };
 
   return (
     <div className='flex h-screen bg-[#17212b] text-white'>
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className='w-80 border-r border-[#0e1621] flex flex-col'>
+      <div className={`
+        fixed lg:static
+        w-80 h-full
+        border-r border-[#0e1621]
+        flex flex-col
+        bg-[#17212b]
+        z-30
+        transform transition-transform duration-300 ease-in-out
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
         {/* Header */}
         <div className='h-14 px-4 flex items-center justify-between border-b border-[#0e1621]'>
           <div className='flex items-center gap-3'>
@@ -74,9 +102,12 @@ export const Wrapper = () => {
             </div>
             <h2 className='text-lg font-medium'>Telegram</h2>
           </div>
-          <button className="p-2 hover:bg-[#242f3d] rounded-full transition-colors">
+          <button 
+            className="p-2 hover:bg-[#242f3d] rounded-full transition-colors"
+            onClick={() => setIsSidebarOpen(false)}
+          >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
@@ -137,6 +168,16 @@ export const Wrapper = () => {
         <ChatHeader />
         <Outlet />
       </main>
+
+      {/* Mobile Menu Button */}
+      <button
+        className="fixed bottom-4 right-4 lg:hidden w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center shadow-lg z-40"
+        onClick={() => setIsSidebarOpen(true)}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
     </div>
   )
 }

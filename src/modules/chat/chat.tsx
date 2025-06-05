@@ -36,10 +36,10 @@ export const Chat = ({ onSendMessage, messages, isLoading }: ChatProps) => {
   const displayMessages = messages.map((message) => (
     <div 
       key={message.id} 
-      className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
+      className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-4 px-2`}
     >
-      <div className={`max-w-[70%] ${message.sender === 'user' ? 'bg-blue-500' : 'bg-gray-200'} rounded-lg p-3`}>
-        <div className="text-sm">{message.content}</div>
+      <div className={`max-w-[85%] sm:max-w-[70%] ${message.sender === 'user' ? 'bg-blue-500' : 'bg-gray-200'} rounded-lg p-3`}>
+        <div className="text-sm break-words">{message.content}</div>
         <div className={`text-xs mt-1 ${message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'}`}>
           {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </div>
@@ -49,7 +49,7 @@ export const Chat = ({ onSendMessage, messages, isLoading }: ChatProps) => {
 
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-2 sm:p-4">
         {displayMessages}
         {isLoading && (
           <div className="flex justify-start mb-4">
@@ -64,7 +64,7 @@ export const Chat = ({ onSendMessage, messages, isLoading }: ChatProps) => {
         )}
         <div ref={messagesEndRef} />
       </div>
-      <div className="flex-none p-4 border-t">
+      <div className="flex-none p-2 sm:p-4 border-t">
         <div className="flex gap-2">
           <input
             type="text"
