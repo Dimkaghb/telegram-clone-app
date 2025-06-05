@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
-import Button from '../../shared/ui/button'
 
 const chatList = [
   { id: 'ai-chat', name: "AI Chat" },

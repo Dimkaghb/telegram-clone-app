@@ -1,5 +1,3 @@
-import React from 'react'
-
 type MessageProps = {
   message: string;
   sender: string;

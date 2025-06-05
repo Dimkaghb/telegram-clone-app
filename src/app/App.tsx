@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Routes, Route, useParams, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Routes, Route, useParams } from 'react-router-dom'
 import { Wrapper } from '../modules/wrapper/wrapper'
 import { Chat } from '../modules/chat/chat'
 import { type Message } from '../shared/types/message'
@@ -19,7 +19,6 @@ const ChatWithHistory = () => {
   const { chatId } = useParams<{ chatId: string }>();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (chatId) {
